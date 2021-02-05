@@ -59,7 +59,7 @@ plugins:
 author:
   name   : "Guillem Roca"
   avatar : "/assets/images/profile-pic.jpg"
-  bio    : "Just a regular Software Engineer wanting to re-envision how people interact with the media technologies in normal everyday life. Athletics, videogames and pasta is my jam."
+  bio    : "Just a regular Software Engineer wanting to re-envision how people interact with media technologies in normal everyday life. Athletics, videogames and pasta is my jam."
   links:
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
