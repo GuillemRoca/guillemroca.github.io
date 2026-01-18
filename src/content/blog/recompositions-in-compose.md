@@ -2,7 +2,7 @@
 title: 'Mastering Recompositions in Jetpack Compose'
 description: 'A deep dive into how recompositions work in Jetpack Compose and strategies to optimize your Android UI performance.'
 pubDate: 2024-05-12
-heroImage: '/images/blog-recomposition.png'
+heroImage: '../../assets/blog-recomposition.png'
 tags: ['Android', 'Kotlin', 'Compose', 'Performance']
 ---
 
