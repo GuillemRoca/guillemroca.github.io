@@ -2,7 +2,7 @@
 title: 'Architecting Modern Android Apps'
 description: 'Implementing Clean Architecture, MVVM, and Modularization in a real-world GitHub browser application.'
 pubDate: 2025-01-15
-heroImage: '/images/blog-arch.png'
+heroImage: '../../assets/blog-arch.png'
 tags: ['Architecture', 'Clean Code', 'Modularization', 'Android']
 ---
 
