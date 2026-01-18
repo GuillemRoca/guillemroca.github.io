@@ -1,10 +1,10 @@
-# Astro Starter Kit: Minimal
+# Guillem Roca's Personal Website
 
-```sh
-npm create astro@latest -- --template minimal
-```
+This is the source code for my personal website, hosted at [guillemroca.github.io](https://guillemroca.github.io). Built with [Astro](https://astro.build).
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## 🚀 Deployment
+
+This project is automatically deployed to GitHub Pages using GitHub Actions.
 
 ## 🚀 Project Structure
 
