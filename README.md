@@ -1,6 +1,6 @@
 # Guillem Roca's Personal Website
 
-This is the source code for my personal website, hosted at [guillemroca.github.io](https://guillemroca.github.io). Built with [Astro](https://astro.build).
+This is the source code for my personal website, hosted at [guillem.dev](https://guillem.dev). Built with [Astro](https://astro.build).
 
 ## 🚀 Deployment
 

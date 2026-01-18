@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project Overview
-This is the personal website of Guillem Roca, hosted at [guillem.dev](https://guillem.dev). The project is a static site built with [Astro](https://astro.build) and deployed to GitHub Pages.
+This is the personal website of Guillem Roca, hosted at [guillemroca.github.io](https://guillemroca.github.io). The project is a static site built with [Astro](https://astro.build) and deployed to GitHub Pages.
 
 ## Tech Stack
 - **Framework**: Astro
