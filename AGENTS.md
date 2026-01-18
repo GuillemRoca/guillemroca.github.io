@@ -15,7 +15,7 @@ This is the personal website of Guillem Roca, hosted at [guillem.dev](https://gu
 - `src/pages/`: Contains the site's pages. Files here become routes.
 - `src/layouts/`: Shared layout components (e.g., `Layout.astro`).
 - `src/components/`: Reusable UI components.
-- `src/assets/`: Images and other assets to be optimized by Astro.
+- `src/assets/`: Images to be optimized by Astro.
 - `public/`: Static assets (fonts, `CNAME`, etc.) served at the root.
 - `.github/workflows/deploy.yml`: GitHub Actions workflow for automatic deployment.
 
