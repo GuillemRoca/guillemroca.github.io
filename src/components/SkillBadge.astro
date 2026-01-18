@@ -1,0 +1,37 @@
+---
+interface Props {
+	skill: string;
+}
+
+const { skill } = Astro.props;
+const githubQueryUrl = `https://github.com/GuillemRoca?tab=repositories&q=${encodeURIComponent(skill)}&type=&language=&sort=`;
+---
+
+<a href={githubQueryUrl} target="_blank" class="skill-badge" aria-label={`Filter repositories by ${skill}`}>
+    {skill}
+</a>
+
+<style>
+    .skill-badge {
+        display: inline-block;
+        background-color: var(--surface-color);
+        color: var(--text-color);
+        border: 1px solid var(--border-color);
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        letter-spacing: 0.02em;
+        text-decoration: none;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .skill-badge:hover {
+        border-color: var(--accent-primary);
+        color: var(--accent-primary);
+        transform: translateY(-1px);
+        background-color: rgba(var(--accent-primary), 0.05);
+    }
+</style>

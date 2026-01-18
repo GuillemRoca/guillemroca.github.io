@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import SkillBadge from '../../components/SkillBadge.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+	<article class="blog-post">
+		<div class="hero-image">
+			{post.data.heroImage && <img src={post.data.heroImage} alt={post.data.title} />}
+		</div>
+		<div class="post-header">
+			<div class="meta">
+				<time datetime={post.data.pubDate.toISOString()}>
+					{post.data.pubDate.toLocaleDateString('en-us', {
+						year: 'numeric',
+						month: 'long',
+						day: 'numeric',
+					})}
+				</time>
+			</div>
+			<h1>{post.data.title}</h1>
+            <div class="tags">
+                {post.data.tags?.map(tag => <SkillBadge skill={tag} />)}
+            </div>
+		</div>
+		<div class="prose">
+			<Content />
+		</div>
+	</article>
+</Layout>
+
+<style>
+	.blog-post {
+		max-width: 720px;
+		margin: 0 auto 5rem auto;
+	}
+
+	.hero-image {
+		width: 100%;
+        margin: 2rem 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+	}
+
+	.hero-image img {
+		display: block;
+		width: 100%;
+		border-radius: 12px;
+	}
+
+	.post-header {
+		text-align: center;
+		margin-bottom: 3rem;
+	}
+
+	.meta {
+		color: var(--accent-primary);
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	h1 {
+		font-size: 2.5rem;
+		font-weight: 800;
+		line-height: 1.2;
+		margin-bottom: 1.5rem;
+	}
+
+    .tags {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+	.prose {
+		line-height: 1.8;
+		font-size: 1.1rem;
+		color: var(--text-color);
+        opacity: 0.9;
+	}
+    
+    /* Global styles for markdown content */
+    .prose :global(h2) {
+        font-size: 1.8rem;
+        margin-top: 3rem;
+        margin-bottom: 1rem;
+        color: var(--text-color);
+    }
+    
+    .prose :global(h3) {
+        font-size: 1.4rem;
+        margin-top: 2rem;
+        margin-bottom: 0.8rem;
+        color: var(--text-color);
+    }
+    
+    .prose :global(p) {
+        margin-bottom: 1.5rem;
+    }
+    
+    .prose :global(a) {
+        color: var(--accent-primary);
+        text-decoration: underline;
+    }
+    
+    .prose :global(pre) {
+        background-color: #1e1e23;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        border: 1px solid var(--border-color);
+    }
+    
+    .prose :global(code) {
+        font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+        font-size: 0.9em;
+    }
+    
+    .prose :global(p > code) {
+        background-color: var(--surface-color);
+        padding: 0.2rem 0.4rem;
+        border-radius: 4px;
+        color: var(--accent-secondary);
+    }
+</style>
