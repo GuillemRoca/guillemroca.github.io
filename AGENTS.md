@@ -6,6 +6,7 @@ This is the personal website of Guillem Roca, hosted at [guillemroca.github.io](
 ## Tech Stack
 - **Framework**: Astro
 - **Language**: TypeScript, HTML, CSS (standard)
+- **Asset Management**: `src/assets` for images (optimized), `public` for static files
 - **Deployment**: GitHub Pages via GitHub Actions
 - **Package Manager**: npm
 
@@ -14,7 +15,8 @@ This is the personal website of Guillem Roca, hosted at [guillemroca.github.io](
 - `src/pages/`: Contains the site's pages. Files here become routes.
 - `src/layouts/`: Shared layout components (e.g., `Layout.astro`).
 - `src/components/`: Reusable UI components.
-- `public/`: Static assets (fonts, images, `CNAME`, etc.) served at the root.
+- `src/assets/`: Images and other assets to be optimized by Astro.
+- `public/`: Static assets (fonts, `CNAME`, etc.) served at the root.
 - `.github/workflows/deploy.yml`: GitHub Actions workflow for automatic deployment.
 
 ## Development Commands
