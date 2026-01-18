@@ -2,7 +2,7 @@
 title: 'Building for Every Platform with Kotlin Multiplatform'
 description: 'How I built a cross-platform bird watching app using Kotlin Multiplatform and Compose Multiplatform.'
 pubDate: 2024-11-28
-heroImage: '../../assets/blog-kmp.png'
+heroImage: '/images/blog-kmp.png'
 tags: ['KMP', 'Kotlin', 'iOS', 'Android']
 ---
 
