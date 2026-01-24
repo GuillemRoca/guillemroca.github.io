@@ -1,56 +1,65 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
 
 const projects = [
 	{
 		title: "samples-jetpack-compose",
-		description: "A comprehensive collection of Jetpack Compose sample projects demonstrating best practices, UI components, and advanced features.",
+		description:
+			"A comprehensive collection of Jetpack Compose sample projects demonstrating best practices, UI components, and advanced features.",
 		tags: ["Kotlin", "Compose", "Android"],
-		url: "https://github.com/GuillemRoca/samples-jetpack-compose"
+		url: "https://github.com/GuillemRoca/samples-jetpack-compose",
 	},
 	{
 		title: "birds",
-		description: "A wholesome birds display application built using Kotlin Multiplatform (KMP) for Android and iOS.",
+		description:
+			"A wholesome birds display application built using Kotlin Multiplatform (KMP) for Android and iOS.",
 		tags: ["KMP", "Compose", "iOS", "Android"],
-		url: "https://github.com/GuillemRoca/birds"
+		url: "https://github.com/GuillemRoca/birds",
 	},
 	{
 		title: "github-browser-lab",
-		description: "GitHub Android client demonstrating modern architecture patterns, Material Design, and best practices.",
+		description:
+			"GitHub Android client demonstrating modern architecture patterns, Material Design, and best practices.",
 		tags: ["Android", "LazyColumn", "Paging3"],
-		url: "https://github.com/GuillemRoca/github-browser-lab"
+		url: "https://github.com/GuillemRoca/github-browser-lab",
 	},
 	{
 		title: "compose-recompositions",
-		description: "Educational samples explaining how Jetpack Compose recompositions work and how to optimize them.",
+		description:
+			"Educational samples explaining how Jetpack Compose recompositions work and how to optimize them.",
 		tags: ["Compose", "Performance", "Education"],
-		url: "https://github.com/GuillemRoca/compose-recompositions"
+		url: "https://github.com/GuillemRoca/compose-recompositions",
 	},
 	{
 		title: "AM2R-cat",
-		description: "Localization project translating 'Another Metroid 2 Remake' (AM2R) into Catalan.",
+		description:
+			"Localization project translating 'Another Metroid 2 Remake' (AM2R) into Catalan.",
 		tags: ["Translation", "Game Mod", "Catalan"],
-		url: "https://github.com/GuillemRoca/AM1R-cat"
-	}
+		url: "https://github.com/GuillemRoca/AM2R-cat",
+	},
 ];
 ---
 
 <Layout title="Projects | Guillem Roca">
 	<div class="page-header">
 		<h1>All Projects</h1>
-		<p>A collection of my open source work, experiments, and contributions.</p>
+		<p>
+			A collection of my open source work, experiments, and contributions.
+		</p>
 	</div>
-	
+
 	<div class="projects-grid">
-		{projects.map(project => (
-			<ProjectCard 
-				title={project.title} 
-				description={project.description} 
-				tags={project.tags} 
-				url={project.url} 
-			/>
-		))}
+		{
+			projects.map((project) => (
+				<ProjectCard
+					title={project.title}
+					description={project.description}
+					tags={project.tags}
+					url={project.url}
+				/>
+			))
+		}
 	</div>
 </Layout>
 
