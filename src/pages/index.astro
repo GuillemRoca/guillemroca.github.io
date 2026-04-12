@@ -1,70 +1,71 @@
 ---
+import { getCollection } from "astro:content";
+import Section from "../components/common/Section.astro";
+import FeaturedArticles from "../components/home/FeaturedArticles.astro";
+import FeaturedProjects from "../components/home/FeaturedProjects.astro";
+import Hero from "../components/home/Hero.astro";
+import Skills from "../components/home/Skills.astro";
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import SkillBadge from "../components/SkillBadge.astro";
+import { getConfigurationCollection } from "../lib/utils";
 
-const skills = [
-	"Android",
-	"Kotlin",
-	"Jetpack Compose",
-	"Kotlin Multiplatform",
-	"Java",
-	"Gradle",
-	"MVVM/MVI",
-	"Clean Architecture",
-	"Coroutines",
-];
+const { data: config } = await getConfigurationCollection();
+
+const featuredProjects = (
+  await getCollection("project", (e) => e.data.featured)
+).map((e) => ({
+  ...e.data,
+  url: `/projects/${e.data.slug}`,
+}));
+const featuredArticles = (
+  await getCollection("blog", (e) => e.data.featured)
+).map((e) => ({
+  ...e.data,
+  url: `/blog/${e.data.slug}`,
+}));
 ---
 
-<Layout title="Guillem Roca">
-	<Hero />
-
-	<section class="section">
-		<h3 class="section-title">Technical Skills</h3>
-		<div class="skills-grid">
-			{skills.map((skill) => <SkillBadge skill={skill} />)}
-		</div>
-	</section>
+<Layout>
+  <Fragment slot="head">
+    <title>{config.globalMeta.title}</title>
+    <meta
+      name="description"
+      content={config.globalMeta.longDescription ?? config.globalMeta.description}
+    />
+    <meta property="og:title" content={config.globalMeta.title} />
+    <meta
+      property="og:description"
+      content={config.globalMeta.description}
+    />
+    {config.globalMeta.keywords && (
+      <meta name="keywords" content={config.globalMeta.keywords.join(", ")} />
+    )}
+    {config.globalMeta.cardImage && (
+      <meta property="og:image" content={config.globalMeta.cardImage} />
+    )}
+    <meta property="og:url" content={config.site.baseUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={config.globalMeta.title} />
+    <meta
+      name="twitter:description"
+      content={config.globalMeta.description}
+    />
+    {config.globalMeta.cardImage && (
+      <meta name="twitter:image" content={config.globalMeta.cardImage} />
+    )}
+    <meta http-equiv="content-language" content="en" />
+    <meta name="language" content="English" />
+    <link rel="canonical" href={config.site.baseUrl} />
+  </Fragment>
+  <Section class="my-16">
+    <Hero />
+  </Section>
+  <Section>
+    <Skills />
+  </Section>
+  <Section>
+    <FeaturedProjects featuredProjects={featuredProjects} />
+  </Section>
+  <Section>
+    <FeaturedArticles featuredArticles={featuredArticles} />
+  </Section>
 </Layout>
-
-<style>
-	.section {
-		margin-bottom: 6rem;
-	}
-
-	.section-title {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin-bottom: 2rem;
-		color: var(--text-color);
-		position: relative;
-		display: inline-block;
-	}
-
-	.section-title::after {
-		content: "";
-		position: absolute;
-		bottom: -8px;
-		left: 0;
-		width: 40px;
-		height: 3px;
-		background-color: var(--accent-primary);
-		border-radius: 2px;
-	}
-
-	@media (max-width: 768px) {
-		.section {
-			margin-bottom: 3rem;
-		}
-
-		.section-title {
-			margin-bottom: 1.5rem;
-		}
-	}
-
-	.skills-grid {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-	}
-</style>
