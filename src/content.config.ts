@@ -2,6 +2,7 @@ import { defineCollection } from "astro:content";
 import { file, glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { parse as parseToml } from "toml";
+import { githubPinnedLoader } from "./lib/github-loader";
 
 /**
  * Loader and schema for the configuration collection.
@@ -116,31 +117,22 @@ const blog = defineCollection({
 
 /**
  * Loader and schema for the project collection.
+ * Fetches pinned repositories from GitHub at build time.
  */
 const project = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./content/projects" }),
-  schema: z
-    .object({
-      title: z.string(),
-      slug: z.string().optional(),
-      description: z.string(),
-      longDescription: z.string().optional(),
-      cardImage: z.url().optional(),
-      tags: z.array(z.string()).optional(),
-      githubUrl: z.url().optional(),
-      liveDemoUrl: z.url().optional(),
-      timestamp: z.date().transform((val) => new Date(val)),
-      featured: z.boolean().default(false),
-    })
-    .transform((data) => {
-      const slug =
-        data.slug ??
-        data.title
-          .toLowerCase()
-          .replace(/\s+/g, "-")
-          .replace(/[^\w-]/g, "");
-      return { ...data, slug };
-    }),
+  loader: githubPinnedLoader(),
+  schema: z.object({
+    title: z.string(),
+    slug: z.string(),
+    description: z.string(),
+    longDescription: z.string().optional(),
+    cardImage: z.url().optional(),
+    tags: z.array(z.string()).optional(),
+    githubUrl: z.url().optional(),
+    liveDemoUrl: z.url().optional(),
+    timestamp: z.date(),
+    featured: z.boolean().default(false),
+  }),
 });
 
 export const collections = { blog, project, configuration };
