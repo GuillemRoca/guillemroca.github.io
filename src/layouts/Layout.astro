@@ -19,23 +19,18 @@ import "../styles/global.css";
 
     <!-- Theme detection script - runs before page renders -->
     <script is:inline>
-      const theme = (() => {
-        if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-          return localStorage.getItem("theme") ?? "light";
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark";
-        }
-        return "light";
-      })();
-
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark");
-      } else {
-        document.documentElement.classList.add("dark");
+      function applyTheme(pref) {
+        const isDark = pref === "dark" || (pref === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark", isDark);
       }
 
-      window.localStorage.setItem("theme", theme);
+      const pref = (typeof localStorage !== "undefined" && localStorage.getItem("theme")) || "auto";
+      applyTheme(pref);
+
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function() {
+        var current = localStorage.getItem("theme") || "auto";
+        if (current === "auto") applyTheme("auto");
+      });
     </script>
 
     <slot name="head" />
