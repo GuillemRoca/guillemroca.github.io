@@ -1,0 +1,21 @@
+---
+import { getConfigurationCollection } from "../../lib/utils";
+
+const { data: config } = await getConfigurationCollection();
+const skills = config.skills?.list ?? [];
+---
+
+{
+  skills.length > 0 && (
+    <div>
+      <h3 class="font-display text-lg sm:text-xl leading-loose">Skills</h3>
+      <div class="flex flex-row flex-wrap gap-2 my-8">
+        {skills.map((skill) => (
+          <span class="-zag-text -zag-bg zag-transition px-2 py-1 text-sm font-semibold">
+            {skill}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
