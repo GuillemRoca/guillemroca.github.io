@@ -1,39 +1,54 @@
 # Guillem Roca's Personal Website
 
-This is the source code for my personal website, hosted at [guillem.dev](https://guillem.dev). Built with [Astro](https://astro.build).
+This is the source code for my personal website, hosted at [guillem.dev](https://guillem.dev). Built with [Astro](https://astro.build) using the [Zaggonaut](https://github.com/RATIU5/zaggonaut) template.
 
-## 🚀 Deployment
+## Tech Stack
 
-This project is automatically deployed to GitHub Pages using GitHub Actions.
+- **Framework**: Astro 6
+- **Styling**: Tailwind CSS 4
+- **Content**: Content Collections (TOML config + Markdown)
+- **Linting/Formatting**: Biome
+- **Package Manager**: pnpm
+- **Deployment**: GitHub Pages via GitHub Actions
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Project Structure
 
 ```text
 /
+├── content/
+│   ├── configuration.toml    # Site-wide config (meta, hero, socials, skills)
+│   ├── projects/             # Project markdown files
+│   └── blogs/                # Blog post markdown files
 ├── public/
+│   ├── favicon.ico
+│   ├── CNAME
+│   └── robots.txt
 ├── src/
-│   └── pages/
-│       └── index.astro
+│   ├── components/           # Reusable UI components
+│   ├── layouts/              # Page layouts
+│   ├── lib/                  # Utilities and types
+│   ├── pages/                # Routes (index, blog, projects, 404)
+│   ├── styles/               # Global CSS with Tailwind
+│   └── content.config.ts     # Content collection schemas
+├── astro.config.mjs
+├── biome.json
+├── tsconfig.json
 └── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Images should be placed in `src/assets/` to leverage Astro's image optimization. Other static assets, like fonts or `CNAME`, can be placed in the `public/` directory.
-
-## 🧞 Commands
+## Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Command          | Action                                       |
+| :--------------- | :------------------------------------------- |
+| `pnpm install`   | Installs dependencies                        |
+| `pnpm dev`       | Starts local dev server at `localhost:4321`   |
+| `pnpm build`     | Build your production site to `./dist/`       |
+| `pnpm preview`   | Preview your build locally, before deploying  |
+| `pnpm lint`      | Lint with Biome                               |
+| `pnpm format`    | Format with Biome                             |
+
+## Deployment
+
+This project is automatically deployed to GitHub Pages when changes are pushed to the `main` branch.

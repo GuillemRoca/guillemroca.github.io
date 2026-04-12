@@ -1,0 +1,62 @@
+# Due to how Astro handles type inference with this structure,
+# we need to prefix all configuration keys with an underscore.
+
+[_.site]
+baseUrl = "https://guillem.dev"
+
+[_.globalMeta]
+title = "Guillem Roca"
+description = "Software Engineer - Android. Expert in Kotlin, Android, and Jetpack Compose."
+longDescription = "I re-envision how people interact with media technologies. Currently building at Wallapop. Expert in Kotlin, Android, and Jetpack Compose."
+cardImage = "https://github.com/GuillemRoca.png"
+keywords = ["android", "kotlin", "jetpack compose", "software engineer"]
+
+[_.blogMeta]
+title = "Guillem Roca - Blog"
+description = "Articles about Android development, Kotlin, and software engineering."
+longDescription = "Thoughts on Android development, Kotlin, Jetpack Compose, and software engineering."
+cardImage = "https://github.com/GuillemRoca.png"
+keywords = ["android", "kotlin", "blog"]
+
+[_.projectMeta]
+title = "Guillem Roca - Projects"
+description = "Open-source Android and Kotlin projects."
+longDescription = "A collection of open-source projects focused on Android, Kotlin, and Jetpack Compose."
+cardImage = "https://github.com/GuillemRoca.png"
+keywords = ["android", "kotlin", "open-source", "projects"]
+
+[_.notFoundMeta]
+title = "Guillem Roca - 404"
+description = "The page you are looking for does not exist."
+longDescription = "The page you are looking for does not exist."
+cardImage = "https://github.com/GuillemRoca.png"
+
+[_.hero]
+title = "Guillem"
+subtitle = "Software Engineer - Android<br/>Building at <a href='https://play.google.com/store/apps/details?id=com.wallapop' class='zag-link zag-transition underline'>Wallapop</a>"
+image = "https://github.com/GuillemRoca.png"
+ctaText = "View Projects"
+ctaUrl = "/projects"
+
+[_.personal]
+name = "Guillem Roca"
+githubProfile = "https://github.com/GuillemRoca"
+twitterProfile = "https://x.com/6uillemRoca"
+linkedinProfile = "https://www.linkedin.com/in/guillemroca/"
+blueskyProfile = "https://bsky.app/profile/guillem.dev"
+contactEmail = "contact@guillem.dev"
+
+[_.texts]
+articlesName = "Articles"
+projectsName = "Projects"
+viewAll = "View All"
+noArticles = "No articles yet."
+noProjects = "No projects found."
+
+[_.menu]
+home = "/"
+projects = "/projects"
+blog = "/blog"
+
+[_.skills]
+list = ["Android", "Kotlin", "Jetpack Compose", "Kotlin Multiplatform", "Java", "Gradle", "MVVM/MVI", "Clean Architecture", "Coroutines"]
