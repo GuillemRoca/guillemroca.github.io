@@ -1,7 +1,6 @@
 ---
 import { getConfigurationCollection } from "../lib/utils";
 import Anchor from "./common/Anchor.astro";
-import ThemeToggle from "./ThemeToggle.astro";
 
 const { data: config } = await getConfigurationCollection();
 ---
@@ -131,7 +130,6 @@ const { data: config } = await getConfigurationCollection();
           </Anchor>
         )
       }
-      <ThemeToggle />
     </div>
   </nav>
 </header>
