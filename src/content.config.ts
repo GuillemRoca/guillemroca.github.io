@@ -40,14 +40,6 @@ const configuration = defineCollection({
       keywords: z.array(z.string()).optional(),
     }),
 
-    projectMeta: z.object({
-      title: z.string(),
-      description: z.string(),
-      longDescription: z.string().optional(),
-      cardImage: z.url().optional(),
-      keywords: z.array(z.string()).optional(),
-    }),
-
     hero: z.object({
       role: z.string(),
       specialty: z.string().optional(),
@@ -112,7 +104,6 @@ const configuration = defineCollection({
 
     menu: z.object({
       home: z.string().default("/"),
-      projects: z.string().default("/projects"),
       writing: z.string().default("/blog"),
     }),
 

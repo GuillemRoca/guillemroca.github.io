@@ -20,8 +20,8 @@ This is the personal website of Guillem Roca, hosted at [guillem.dev](https://gu
 - `src/lib/github-loader.ts`: Custom Astro content loader that fetches pinned repos from GitHub GraphQL API.
 - `content/configuration.toml`: Site-wide configuration (metadata, hero, about, personal side of the Professional/Personal toggle, links, menu, skills).
 - `content/blogs/`: Markdown files for blog posts. The Writing section and nav item appear automatically once at least one post exists.
-- `src/pages/`: Page routes (index, 404, blog/, projects/).
-- `src/layouts/`: Layout components (Layout, BlogLayout, ProjectLayout).
+- `src/pages/`: Page routes (index, 404, blog/). Projects live on the homepage; `/projects` redirects to `/` (see `redirects` in `astro.config.mjs`).
+- `src/layouts/`: Layout components (Layout, BlogLayout).
 - `src/components/`: Reusable UI components (Header, Footer, ProjectList, ArticleList, Stack, Elsewhere, PageHeading, Prose).
 - `src/components/home/`: Homepage-specific components (Hero with the Professional/Personal toggle and the flipping photo/sketch portrait).
 - `src/components/common/`: Shared primitives (Section = label-left row, Ornament, Arrow).

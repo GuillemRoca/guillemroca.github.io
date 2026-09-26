@@ -9,7 +9,7 @@ This is the source code for my personal website, hosted at [guillem.dev](https:/
   - Personal: warm ivory + sage
   - The mode comes from `?mode=professional|personal`, otherwise from the last choice (saved in `localStorage`), and is applied before first paint.
 - **Flipping portrait**: a photo on the Professional side and an ink-and-wash sketch on the Personal side, inside slowly rotating rings. Clicking the portrait also switches sides.
-- **Projects from GitHub**: pinned repositories (with stars and language colours) are fetched at build time.
+- **Projects from GitHub**: pinned repositories (with stars and language colours) are fetched at build time and listed on the Professional side. Side projects are listed on the Personal side. There is no separate projects page, and `/projects` redirects to the homepage.
 - **Blog-ready**: the Writing section and nav item appear automatically once `content/blogs/` has at least one post.
 
 ## Tech Stack
@@ -41,12 +41,12 @@ This is the source code for my personal website, hosted at [guillem.dev](https:/
 │   │   ├── home/Hero.astro   # Toggle, flipping portrait and name
 │   │   ├── common/           # Section (label-left row), Ornament, Arrow
 │   │   └── ...               # Header, Footer, ProjectList, ArticleList, Stack, Elsewhere, PageHeading, Prose
-│   ├── layouts/              # Layout (sets the mode before paint), BlogLayout, ProjectLayout
+│   ├── layouts/              # Layout (sets the mode before paint), BlogLayout
 │   ├── lib/
 │   │   ├── github-loader.ts  # Custom loader: fetches pinned repos from the GitHub GraphQL API
 │   │   ├── types.ts
 │   │   └── utils.ts
-│   ├── pages/                # Routes (index, blog, projects, 404)
+│   ├── pages/                # Routes (index, blog, 404)
 │   ├── styles/global.css     # Tailwind, Professional/Personal palettes, component classes
 │   └── content.config.ts     # Content collection schemas
 ├── astro.config.mjs

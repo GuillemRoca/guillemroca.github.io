@@ -6,6 +6,10 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
   site: "https://guillem.dev",
+  // Projects now live on the homepage (Professional and Personal views).
+  redirects: {
+    "/projects": "/",
+  },
   vite: {
     plugins: [tailwindcss()],
   },

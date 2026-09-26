@@ -7,13 +7,15 @@ const hasWriting = (await getCollection("blog")).length > 0;
 
 const labels: Record<string, string> = {
   home: "Home",
-  projects: "Projects",
   writing: "Writing",
 };
 
 const items = Object.entries(config.menu)
   .filter(([key]) => key !== "writing" || hasWriting)
   .map(([key, url]) => ({ label: labels[key] ?? key, url }));
+
+// A nav with only "Home" adds nothing; it shows once Writing exists.
+const showNav = items.length > 1;
 
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const isCurrent = (url: string) =>
@@ -26,20 +28,24 @@ const isCurrent = (url: string) =>
     class="font-display text-[22px] font-medium tracking-[-0.005em] text-(--ink-2) italic"
     >guillem<span class="text-(--accent)">.</span>dev</a
   >
-  <nav aria-label="Primary" class="caps -mr-2 flex items-center text-(--muted) md:mr-0 md:gap-8">
-    {
-      items.map((item) => (
-        <a
-          href={item.url}
-          aria-current={isCurrent(item.url) ? "page" : undefined}
-          class:list={[
-            "flex h-11 items-center border-b border-transparent px-2 md:h-auto md:px-0 md:py-1.5",
-            { "border-(--accent)! text-(--ink-2)": isCurrent(item.url) },
-          ]}
-        >
-          {item.label}
-        </a>
-      ))
-    }
-  </nav>
+  {
+    showNav && (
+      <nav aria-label="Primary" class="caps -mr-2 flex items-center text-(--muted) md:mr-0 md:gap-8">
+        {
+          items.map((item) => (
+            <a
+              href={item.url}
+              aria-current={isCurrent(item.url) ? "page" : undefined}
+              class:list={[
+                "flex h-11 items-center border-b border-transparent px-2 md:h-auto md:px-0 md:py-1.5",
+                { "border-(--accent)! text-(--ink-2)": isCurrent(item.url) },
+              ]}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    )
+  }
 </header>

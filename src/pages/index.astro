@@ -17,7 +17,7 @@ const projects = (await getCollection("project", (e) => e.data.featured)).map(
   (e) => ({
     name: e.data.title,
     description: e.data.description,
-    url: e.data.githubUrl ?? `/projects/${e.data.slug}`,
+    url: e.data.githubUrl ?? config.personal.githubProfile ?? "/",
     language: e.data.language,
     languageColor: e.data.languageColor,
     stars: e.data.stars,
