@@ -8,35 +8,95 @@ baseUrl = "https://guillem.dev"
 title = "Guillem Roca"
 description = "Software Engineer - Android. Expert in Kotlin, Android, and Jetpack Compose."
 longDescription = "I re-envision how people interact with media technologies. Currently building at Wallapop. Expert in Kotlin, Android, and Jetpack Compose."
-cardImage = "https://github.com/GuillemRoca.png"
+cardImage = "https://guillem.dev/avatar.jpg"
 keywords = ["android", "kotlin", "jetpack compose", "software engineer"]
 
 [_.blogMeta]
-title = "Guillem Roca - Blog"
+title = "Guillem Roca - Writing"
 description = "Articles about Android development, Kotlin, and software engineering."
 longDescription = "Thoughts on Android development, Kotlin, Jetpack Compose, and software engineering."
-cardImage = "https://github.com/GuillemRoca.png"
+cardImage = "https://guillem.dev/avatar.jpg"
 keywords = ["android", "kotlin", "blog"]
 
 [_.projectMeta]
 title = "Guillem Roca - Projects"
 description = "Open-source Android and Kotlin projects."
 longDescription = "A collection of open-source projects focused on Android, Kotlin, and Jetpack Compose."
-cardImage = "https://github.com/GuillemRoca.png"
+cardImage = "https://guillem.dev/avatar.jpg"
 keywords = ["android", "kotlin", "open-source", "projects"]
 
 [_.notFoundMeta]
 title = "Guillem Roca - 404"
 description = "The page you are looking for does not exist."
 longDescription = "The page you are looking for does not exist."
-cardImage = "https://github.com/GuillemRoca.png"
+cardImage = "https://guillem.dev/avatar.jpg"
 
 [_.hero]
-title = "Guillem"
-subtitle = "Software Engineer - Android<br/>Building at <a href='https://play.google.com/store/apps/details?id=com.wallapop' class='zag-link zag-transition underline'>Wallapop</a>"
-image = "https://github.com/GuillemRoca.png"
-ctaText = "View Projects"
-ctaUrl = "/projects"
+role = "Software Engineer"
+specialty = "Android"
+location = "Barcelona"
+company = "Wallapop"
+companyUrl = "https://play.google.com/store/apps/details?id=com.wallapop"
+image = "/avatar-photo.webp"
+imageAlt = "Photo of Guillem Roca"
+# Personal side of the toggle: the portrait flips to the sketch.
+shortName = "Guillem"
+personalImage = "/avatar-sketch.webp"
+personalImageAlt = "Ink-and-wash sketch of Guillem Roca"
+personalTagline = "Based in Barcelona."
+
+[_.about]
+lead = "I re-envision how people interact with media technologies."
+body = [
+  "I’m an Android engineer in Barcelona, currently building at Wallapop, and an expert in Kotlin, Android and Jetpack Compose.",
+  "Lately I’ve been packaging Android and Kotlin Multiplatform engineering practices into skills for AI coding agents.",
+]
+
+# The "Personal" side of the homepage Professional / Personal toggle.
+[_.personalSide]
+lead = "Catalan by language, retro gamer by habit."
+body = [
+  "Outside work I translate games and handheld software into Catalan, tinker with retro handhelds, and build small apps just for the fun of it.",
+]
+
+[[_.personalSide.lately]]
+label = "Translating"
+text = "AM2R, Another Metroid 2 Remake, into Catalan"
+url = "https://github.com/GuillemRoca/AM2R-cat"
+
+[[_.personalSide.lately]]
+label = "Localizing"
+text = "spruceOS for retro handhelds, in Catalan"
+url = "https://github.com/GuillemRoca/spruceOS"
+
+[[_.personalSide.lately]]
+label = "Following"
+text = "N64 decompilations: Paper Mario, Star Fox 64"
+url = "https://github.com/GuillemRoca/papermario"
+
+[[_.personalSide.sideProjects]]
+name = "birds"
+description = "A wholesome birds display done in Kotlin Multiplatform"
+url = "https://github.com/GuillemRoca/birds"
+language = "Kotlin"
+
+[[_.personalSide.sideProjects]]
+name = "github-browser-lab"
+description = "Another GitHub Android client to test and show architecture and UI/Material Design samples"
+url = "https://github.com/GuillemRoca/github-browser-lab"
+language = "Kotlin"
+
+[[_.personalSide.sideProjects]]
+name = "CMP-Bookpedia"
+description = "Compose Multiplatform Bookpedia app with support for Android, iOS and Web"
+url = "https://github.com/GuillemRoca/CMP-Bookpedia"
+language = "Kotlin"
+
+[[_.personalSide.sideProjects]]
+name = "mooder-android"
+description = "A custom keyboard with mood analysis capabilities"
+url = "https://github.com/GuillemRoca/mooder-android"
+language = "Java"
 
 [_.personal]
 name = "Guillem Roca"
@@ -47,16 +107,17 @@ blueskyProfile = "https://bsky.app/profile/guillem.dev"
 contactEmail = "contact@guillem.dev"
 
 [_.texts]
-articlesName = "Articles"
+articlesName = "Writing"
 projectsName = "Projects"
 viewAll = "View All"
-noArticles = "No articles yet."
+noArticles = "Nothing published yet."
 noProjects = "No projects found."
 
+# The Writing item only shows once content/blogs has at least one post.
 [_.menu]
 home = "/"
 projects = "/projects"
-blog = "/blog"
+writing = "/blog"
 
 [_.skills]
-list = ["Android", "Kotlin", "Jetpack Compose", "Kotlin Multiplatform", "Java", "Gradle", "MVVM/MVI", "Clean Architecture", "Coroutines"]
+list = ["Android", "Kotlin", "Jetpack Compose", "Kotlin Multiplatform", "Java", "Gradle", "MVVM / MVI", "Clean Architecture", "Coroutines"]

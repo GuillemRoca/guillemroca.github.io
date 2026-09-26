@@ -1,13 +1,20 @@
 ---
 import { getCollection } from "astro:content";
-import Section from "../../components/common/Section.astro";
-import ProjectSnippet from "../../components/ProjectSnippet.astro";
+import PageHeading from "../../components/PageHeading.astro";
+import ProjectList from "../../components/ProjectList.astro";
 import Layout from "../../layouts/Layout.astro";
 import { getConfigurationCollection } from "../../lib/utils";
 
-const projects = (await getCollection("project")).sort(
-  (a, b) => b.data.timestamp.valueOf() - a.data.timestamp.valueOf(),
-);
+const projects = (await getCollection("project"))
+  .sort((a, b) => b.data.timestamp.valueOf() - a.data.timestamp.valueOf())
+  .map((e) => ({
+    name: e.data.title,
+    description: e.data.description,
+    url: `/projects/${e.data.slug}`,
+    language: e.data.language,
+    languageColor: e.data.languageColor,
+    stars: e.data.stars,
+  }));
 
 const { data: config } = await getConfigurationCollection();
 ---
@@ -31,7 +38,7 @@ const { data: config } = await getConfigurationCollection();
       <meta property="og:image" content={config.projectMeta.cardImage} />
     )}
     <meta property="og:url" content={`${config.site.baseUrl}/projects`} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={config.projectMeta.title} />
     <meta
       name="twitter:description"
@@ -44,25 +51,10 @@ const { data: config } = await getConfigurationCollection();
     <meta name="language" content="English" />
     <link rel="canonical" href={`${config.site.baseUrl}/projects`} />
   </Fragment>
-  <Section class="py-4 my-8">
-    <div class="flex items-center gap-4 pt-8 pb-16">
-      <h1 class="font-display text-3xl sm:text-4xl leading-loose">{config.texts.projectsName}</h1>
-    </div>
-    <ul>
-      {
-        projects.map((project) => (
-          <li>
-            <ProjectSnippet
-              title={project.data.title}
-              description={project.data.description}
-              url={`/projects/${project.data.slug}`}
-              githubUrl={project.data.githubUrl}
-              liveUrl={project.data.liveDemoUrl}
-              tags={project.data.tags ?? []}
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </Section>
+  <PageHeading title={config.texts.projectsName} eyebrow="Pinned on GitHub">
+    <p class="mt-5 max-w-md text-[17px] text-(--body) italic">
+      {config.projectMeta.longDescription}
+    </p>
+  </PageHeading>
+  <ProjectList items={projects} emptyText={config.texts.noProjects} />
 </Layout>

@@ -1,19 +1,16 @@
 ---
-import { getCollection } from "astro:content";
-import ArticleSnippet from "../../components/ArticleSnippet.astro";
-import Section from "../../components/common/Section.astro";
+import ArticleList from "../../components/ArticleList.astro";
+import PageHeading from "../../components/PageHeading.astro";
 import Layout from "../../layouts/Layout.astro";
-import { getConfigurationCollection } from "../../lib/utils";
+import { getConfigurationCollection, getSortedArticles } from "../../lib/utils";
 
-const articles = (await getCollection("blog")).sort(
-  (a, b) => b.data.timestamp.valueOf() - a.data.timestamp.valueOf(),
-);
+const articles = await getSortedArticles();
 
 const { data: config } = await getConfigurationCollection();
 ---
 
 <Layout>
-    <Fragment slot="head">
+  <Fragment slot="head">
     <title>{config.blogMeta.title}</title>
     <meta
       name="description"
@@ -31,7 +28,7 @@ const { data: config } = await getConfigurationCollection();
       <meta property="og:image" content={config.blogMeta.cardImage} />
     )}
     <meta property="og:url" content={`${config.site.baseUrl}/blog`} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={config.blogMeta.title} />
     <meta
       name="twitter:description"
@@ -44,30 +41,6 @@ const { data: config } = await getConfigurationCollection();
     <meta name="language" content="English" />
     <link rel="canonical" href={`${config.site.baseUrl}/blog`} />
   </Fragment>
-  <Section class="my-8">
-    <div class="flex items-center gap-4 pt-8 pb-16">
-      <h1 class="font-display text-3xl sm:text-4xl leading-loose">
-        {config.texts.articlesName}
-      </h1>
-    </div>
-    <ul>
-      {
-        articles.length === 0 ? (
-          <p>{config.texts.noArticles}</p>
-        ) : (
-          articles.map((article) => (
-            <li>
-              <ArticleSnippet
-                title={article.data.title}
-                description={article.data.description}
-                duration={`${article.data.readTime} min`}
-                url={`/blog/${article.data.slug}`}
-                timestamp={article.data.timestamp}
-              />
-            </li>
-          ))
-        )
-      }
-    </ul>
-  </Section>
+  <PageHeading title={config.texts.articlesName} />
+  <ArticleList items={articles} emptyText={config.texts.noArticles} />
 </Layout>

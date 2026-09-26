@@ -1,0 +1,79 @@
+---
+import Arrow from "./common/Arrow.astro";
+
+export type ProjectItem = {
+  name: string;
+  description: string;
+  url: string;
+  language?: string;
+  languageColor?: string;
+  stars?: number;
+};
+
+type Props = { items: ProjectItem[]; emptyText?: string };
+
+const { items, emptyText } = Astro.props;
+
+// GitHub's colours, for items that don't come from the API.
+const languageColors: Record<string, string> = {
+  Kotlin: "#A97BFF",
+  Java: "#b07219",
+  Shell: "#89e051",
+};
+---
+
+{
+  items.length === 0 ? (
+    <p class="meta">{emptyText}</p>
+  ) : (
+    <ul class="rule-list">
+      {items.map((item) => (
+        <li class="rule-item">
+          <a
+            class="lnk grid gap-y-2 py-[18px] md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline md:gap-x-10"
+            href={item.url}
+          >
+            <span class="block min-w-0">
+              <span class="item-name inline-flex items-center gap-1.5">
+                {item.name}
+                <Arrow size={13} hidden />
+              </span>
+              <span class="mt-1 block text-[15px] leading-[1.58] text-(--desc)">
+                {item.description}
+              </span>
+            </span>
+            <span class="meta inline-flex items-center gap-[18px] whitespace-nowrap">
+              {item.language && (
+                <span class="inline-flex min-w-16 items-center gap-[7px]">
+                  <span
+                    class="size-[7px] rounded-full"
+                    style={`background: ${item.languageColor ?? languageColors[item.language] ?? "var(--dot)"}`}
+                  />
+                  {item.language}
+                </span>
+              )}
+              {item.stars !== undefined && (
+                <span class="inline-flex min-w-[30px] items-center justify-end gap-[5px]">
+                  <svg
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polygon points="12 3 14.8 8.6 21 9.5 16.5 13.9 17.6 20 12 17.1 6.4 20 7.5 13.9 3 9.5 9.2 8.6" />
+                  </svg>
+                  <span class="sr-only">Stars:</span>
+                  {item.stars}
+                </span>
+              )}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

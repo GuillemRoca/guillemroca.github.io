@@ -1,212 +1,533 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-@font-face {
-  font-family: "Literata Variable";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 200 900;
-  src: url(https://cdn.jsdelivr.net/fontsource/fonts/literata:vf@latest/latin-opsz-normal.woff2)
-    format("woff2-variations");
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
-  font-family: "press-start-2p";
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400;
-  src:
-    url(https://cdn.jsdelivr.net/fontsource/fonts/press-start-2p@latest/latin-400-normal.woff2)
-    format("woff2"),
-    url(https://cdn.jsdelivr.net/fontsource/fonts/press-start-2p@latest/latin-400-normal.woff)
-    format("woff");
-  unicode-range:
-    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
-    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191,
-    U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 /*
- Welcome! Zaggonaut colors originate from these theme variables, feel
- free to change them!
+ Ivory Serif — theme tokens. The homepage toggle sets
+ <html data-mode="professional|personal"> and the palette follows it:
+ Professional is a night navy with gold, Personal is warm ivory with sage.
+ Professional is the default (no attribute, e.g. without JavaScript).
 */
 
 @theme {
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --font-display: "press-start-2p", ui-monospace, monospace;
-  --font-serif:
-    "Literata Variable", ui-serif, Georgia, Cambria, "Times New Roman", Times,
-    serif;
-  --color-zag-dark: var(--color-neutral-900);
-  --color-zag-dark-opaque: oklch(from var(--color-neutral-900) l c h / 0.5);
-  --color-zag-light: var(--color-neutral-100);
-  --color-zag-light-opaque: oklch(from var(--color-neutral-100) l c h / 0.5);
-  --color-zag-dark-muted: var(--color-neutral-600);
-  --color-zag-light-muted: var(--color-neutral-400);
-  --color-zag-accent-light: var(--color-emerald-400);
-  --color-zag-accent-light-muted: var(--color-emerald-300);
-  --color-zag-accent-dark: var(--color-emerald-600);
-  --color-zag-accent-dark-muted: var(--color-emerald-800);
+  --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-serif: "Source Serif 4", ui-serif, Georgia, serif;
+}
+
+:root {
+  color-scheme: dark;
+
+  --bg: #141d29;
+  --panel: #1a2533;
+  --chip: #223041;
+  --raised: #223041;
+  --ink: #f6f2e8;
+  --ink-2: #f1ece1;
+  --body: #d6d0c3;
+  --desc: #c2bcaf;
+  --muted: #b3ab96;
+  --index: #9f977f;
+  --sep: #736d5f;
+  --line: #243142;
+  --line-2: #334259;
+  --dot: #4c5a70;
+  --accent: #d1a43c;
+  --avatar-bg: #223041;
+  --avatar-ring: #334259;
+  --shadow: rgba(0, 0, 0, 0.55);
+}
+
+:root[data-mode="personal"] {
+  color-scheme: light;
+
+  --bg: #faf7f0;
+  --panel: #f3eee3;
+  --chip: #efe9dc;
+  --raised: #fffdf8;
+  --ink: #1e2127;
+  --ink-2: #22252b;
+  --body: #3a3a38;
+  --desc: #4e4a43;
+  --muted: #5e5a52;
+  --index: #6b665c;
+  --sep: #8c8472;
+  --line: #e3ddcf;
+  --line-2: #d2c9b6;
+  --dot: #b5ab95;
+  --accent: #4e6b53;
+  --avatar-bg: #dce2cf;
+  --avatar-ring: #ddd5c4;
+  --shadow: rgba(70, 55, 30, 0.35);
+}
+
+/* Content that belongs to one mode only. */
+:root:not([data-mode="personal"]) [data-show="personal"],
+:root[data-mode="personal"] [data-show="professional"] {
+  display: none !important;
+}
+
+/* Colours fade during a mode switch (the class is set briefly by JS). */
+:root.mode-anim,
+:root.mode-anim *:not(.portrait-inner):not(.mode-indicator) {
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease,
+    fill 0.5s ease,
+    stroke 0.5s ease,
+    box-shadow 0.5s ease !important;
 }
 
 @layer base {
-  :root {
-    --zag-stroke: 2px;
-    --zag-offset: 6px;
-    --zag-transition-duration: 0.15s;
-    --zag-transition-timing-function: ease-in-out;
+  html {
+    background: var(--bg);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink-2);
+    font-family: var(--font-serif);
+    -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background-color: var(--color-zag-accent-light);
-    color: var(--color-zag-dark-muted);
+    background: var(--accent);
+    color: var(--bg);
   }
 
-  .zag-transition {
-    @media (prefers-reduced-motion: no-preference) {
-      transition:
-        background-color var(--zag-transition-duration)
-        var(--zag-transition-timing-function),
-        color var(--zag-transition-duration)
-        var(--zag-transition-timing-function),
-        fill var(--zag-transition-duration)
-        var(--zag-transition-timing-function),
-        border-color var(--zag-transition-duration)
-        var(--zag-transition-timing-function),
-        transform var(--zag-transition-duration)
-        var(--zag-transition-timing-function);
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      transition: none !important;
+    }
+  }
+}
+
+@layer components {
+  /* Page frame */
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 22px;
+    box-sizing: content-box;
+  }
+
+  /* Small uppercase label text */
+  .caps {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  /* Placeholder / chip text */
+  .chip {
+    font-size: 0.82em;
+    letter-spacing: 0.05em;
+    background: var(--chip);
+    color: var(--desc);
+    padding: 2px 6px;
+    border-radius: 3px;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  /* Label-left / content-right rows */
+  .row {
+    display: grid;
+    grid-template-columns: 152px minmax(0, 1fr);
+    column-gap: 48px;
+  }
+
+  .row-label {
+    padding-top: 6px;
+  }
+
+  .row-label--list {
+    padding-top: 17px;
+  }
+
+  .row-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink-2);
+  }
+
+  .row-note {
+    margin: 10px 0 0;
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  @media (max-width: 767px) {
+    .row {
+      display: block;
+    }
+
+    .row-label,
+    .row-label--list {
+      padding-top: 0;
+      margin-bottom: 14px;
+    }
+
+    .row-label-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .row-label-head::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+    }
+
+    .row-title {
+      font-size: 25px;
+    }
+
+    .row-note {
+      margin-top: 6px;
+    }
+
+    .row-note br {
+      display: none;
     }
   }
 
-  .zag-bg {
-    background-color: var(--color-zag-light);
-    :where(.dark, .dark *) & {
-      background-color: var(--color-zag-dark);
-    }
+  /* Hairline list rows (projects, posts, links) */
+  .rule-list {
+    border-bottom: 1px solid var(--line);
   }
 
-  .-zag-bg {
-    background-color: var(--color-zag-dark);
-    :where(.dark, .dark *) & {
-      background-color: var(--color-zag-light);
-    }
+  .rule-item {
+    border-top: 1px solid var(--line);
   }
 
-  .zag-text {
-    color: var(--color-zag-dark);
-    :where(.dark, .dark *) & {
-      color: var(--color-zag-light);
-    }
+  .item-name {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    color: var(--ink-2);
+    transition: color 0.2s;
   }
 
-  .-zag-text {
-    color: var(--color-zag-light);
-    :where(.dark, .dark *) & {
-      color: var(--color-zag-dark);
-    }
+  .meta {
+    font-size: 13px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
   }
 
-  .zag-muted {
-    color: var(--color-zag-dark-muted);
-    :where(.dark, .dark *) & {
-      color: var(--color-zag-light-muted);
-    }
+  /* Arrow that nudges on hover */
+  .arr {
+    opacity: 0.5;
+    transition:
+      transform 0.2s,
+      opacity 0.2s;
   }
 
-  .zag-fill {
-    fill: var(--color-zag-dark);
-    &:where(.dark, .dark *) {
-      fill: var(--color-zag-light);
-    }
+  .arr--hidden {
+    opacity: 0;
   }
 
-  .zag-text-muted {
-    color: var(--color-zag-dark-muted);
-    &:where(.dark, .dark *) {
-      color: var(--color-zag-light-muted);
-    }
+  .lnk:hover .arr,
+  .lnk:focus-visible .arr {
+    opacity: 1;
+    transform: translate(2px, -2px);
   }
 
-  .zag-border-b {
-    border-bottom: var(--zag-stroke) solid;
-    border-color: var(--color-zag-dark);
-    &:where(.dark, .dark *) {
-      border-color: var(--color-zag-light);
-    }
+  .lnk:hover .item-name,
+  .lnk:focus-visible .item-name {
+    color: var(--accent);
   }
 
-  .zag-offset {
-    text-underline-offset: var(--zag-offset);
+  /* Underlined inline link */
+  .inline-link {
+    font-style: normal;
+    font-weight: 500;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--accent);
+    padding-bottom: 1px;
   }
 
-  .hover-zag-dotted-grid:hover::before {
-    --dot-bg: var(--color-zag-light);
-    --dot-color: var(--color-zag-dark-muted);
-    --dot-size: 1.5px;
-    --dot-space: 16px;
-    content: "";
+  /* Professional / Personal toggle */
+  .mode-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .mode-ornament {
+    color: var(--accent);
+    opacity: 0.7;
+    animation: whirl 20s linear infinite;
+  }
+
+  .mode-toggle {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 300px;
+    padding: 4px;
+    margin: 0;
+    border: 1px solid var(--line-2);
+    background: var(--panel);
+    border-radius: 999px;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  .mode-indicator {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 24%, var(--raised));
+    box-shadow: 0 4px 14px -4px
+      color-mix(in srgb, var(--accent) 45%, transparent);
+    transition:
+      transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55),
+      background-color 0.5s ease,
+      border-color 0.5s ease;
+  }
+
+  :root[data-mode="personal"] .mode-indicator {
+    transform: translateX(100%);
+  }
+
+  .mode-toggle button {
+    position: relative;
+    z-index: 1;
+    appearance: none;
+    margin: 0;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted);
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .mode-toggle button:hover {
+    color: var(--ink-2);
+  }
+
+  .mode-toggle button svg {
+    opacity: 0.6;
+    transition:
+      transform 0.3s,
+      opacity 0.3s;
+  }
+
+  .mode-toggle button[aria-pressed="true"] {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  .mode-toggle button[aria-pressed="true"] svg {
+    color: var(--accent);
+    opacity: 1;
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 767px) {
+    .mode-row {
+      gap: 10px;
+    }
+
+    .mode-toggle {
+      width: 256px;
+    }
+
+    .mode-toggle button {
+      height: 42px;
+      font-size: 15px;
+      gap: 6px;
+    }
+  }
+
+  /* Portrait: a card that flips between the photo and the sketch */
+  .portrait {
+    position: relative;
+    width: 192px;
+    height: 192px;
+    padding: 0;
+    border: 0;
+    background: none;
+    perspective: 1000px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .portrait:hover {
+    transform: scale(1.04);
+  }
+
+  .portrait:focus-visible {
+    outline-offset: 6px;
+    border-radius: 50%;
+  }
+
+  .portrait-rings {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    display: block;
-    z-index: -1;
-    background:
-      linear-gradient(
-        90deg,
-        var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
-        transparent 1%
-      )
-      bottom right / var(--dot-space) var(--dot-space),
-      linear-gradient(
-        var(--dot-bg) calc(var(--dot-space) - var(--dot-size)),
-        transparent 1%
-      )
-      bottom right / var(--dot-space) var(--dot-space),
-      var(--dot-color);
-    pointer-events: none;
+    color: var(--accent);
   }
 
-  :where(.dark, .dark *) .hover-zag-dotted-grid:hover::before {
-    --dot-bg: var(--color-zag-dark);
-    --dot-color: var(--color-zag-light-muted);
+  .whirl {
+    transform-origin: 100px 100px;
+    animation: whirl 30s linear infinite;
   }
 
-  .hover-zag-dotted-grid:hover::after {
-    content: "";
+  .whirl--medium {
+    animation-duration: 20s;
+    animation-direction: reverse;
+  }
+
+  .whirl--fast {
+    animation-duration: 12s;
+  }
+
+  .portrait:hover .whirl {
+    animation-play-state: paused;
+  }
+
+  .portrait-inner {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 13px;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.2, 1);
+  }
+
+  :root[data-mode="personal"] .portrait-inner {
+    transform: rotateY(180deg);
+  }
+
+  .portrait-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    background: var(--avatar-bg);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow:
+      0 12px 36px -10px var(--shadow),
+      0 0 0 1px var(--avatar-ring);
+  }
+
+  .portrait-back {
+    transform: rotateY(180deg);
+  }
+
+  .portrait-face img {
     width: 100%;
     height: 100%;
-    display: block;
-    z-index: -1;
-    background: linear-gradient(
-      159deg,
-      var(--color-zag-light) 0%,
-      var(--color-zag-light) 50%,
-      var(--color-zag-light-opaque) 100%
-    );
-    pointer-events: none;
+    object-fit: cover;
   }
 
-  :where(.dark, .dark *) .hover-zag-dotted-grid:hover::after {
-    background: linear-gradient(
-      159deg,
-      var(--color-zag-dark) 0%,
-      var(--color-zag-dark) 50%,
-      var(--color-zag-dark-opaque) 100%
-    );
+  @media (max-width: 767px) {
+    .portrait {
+      width: 160px;
+      height: 160px;
+    }
+
+    .portrait-inner {
+      inset: 11px;
+    }
   }
 
-  .opsz {
-    font-variation-settings: "opsz" 72;
+  @keyframes whirl {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .whirl,
+    .mode-ornament {
+      animation: none;
+    }
+
+    .portrait-inner,
+    .mode-indicator {
+      transition: none;
+    }
+  }
+
+  /* Long-form content */
+  .prose-ivory {
+    --tw-prose-body: var(--body);
+    --tw-prose-headings: var(--ink);
+    --tw-prose-lead: var(--body);
+    --tw-prose-links: var(--ink-2);
+    --tw-prose-bold: var(--ink);
+    --tw-prose-counters: var(--muted);
+    --tw-prose-bullets: var(--dot);
+    --tw-prose-hr: var(--line);
+    --tw-prose-quotes: var(--ink);
+    --tw-prose-quote-borders: var(--line-2);
+    --tw-prose-captions: var(--muted);
+    --tw-prose-code: var(--ink);
+    --tw-prose-pre-code: var(--ink);
+    --tw-prose-pre-bg: var(--panel);
+    --tw-prose-th-borders: var(--line-2);
+    --tw-prose-td-borders: var(--line);
+    font-family: var(--font-serif);
+    font-size: 17px;
+    line-height: 1.72;
+    max-width: none;
+  }
+
+  .prose-ivory :where(h1, h2, h3, h4) {
+    font-family: var(--font-display);
+    font-weight: 600;
+  }
+
+  .prose-ivory :where(a) {
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent);
   }
 }

@@ -1,27 +1,33 @@
 ---
 import { getCollection } from "astro:content";
+import ArticleList from "../components/ArticleList.astro";
+import Ornament from "../components/common/Ornament.astro";
 import Section from "../components/common/Section.astro";
-import FeaturedArticles from "../components/home/FeaturedArticles.astro";
-import FeaturedProjects from "../components/home/FeaturedProjects.astro";
+import Elsewhere from "../components/Elsewhere.astro";
 import Hero from "../components/home/Hero.astro";
-import Skills from "../components/home/Skills.astro";
+import ProjectList from "../components/ProjectList.astro";
+import Stack from "../components/Stack.astro";
 import Layout from "../layouts/Layout.astro";
-import { getConfigurationCollection } from "../lib/utils";
+import { getConfigurationCollection, getSortedArticles } from "../lib/utils";
 
 const { data: config } = await getConfigurationCollection();
+const { about, personalSide, texts } = config;
 
-const featuredProjects = (
-  await getCollection("project", (e) => e.data.featured)
-).map((e) => ({
-  ...e.data,
-  url: `/projects/${e.data.slug}`,
-}));
-const featuredArticles = (
-  await getCollection("blog", (e) => e.data.featured)
-).map((e) => ({
-  ...e.data,
-  url: `/blog/${e.data.slug}`,
-}));
+const projects = (await getCollection("project", (e) => e.data.featured)).map(
+  (e) => ({
+    name: e.data.title,
+    description: e.data.description,
+    url: e.data.githubUrl ?? `/projects/${e.data.slug}`,
+    language: e.data.language,
+    languageColor: e.data.languageColor,
+    stars: e.data.stars,
+  }),
+);
+
+// Writing appears only once there is at least one post.
+const articles = (await getSortedArticles()).slice(0, 5);
+const hasWriting = articles.length > 0;
+const skills = config.skills?.list ?? [];
 ---
 
 <Layout>
@@ -32,10 +38,7 @@ const featuredArticles = (
       content={config.globalMeta.longDescription ?? config.globalMeta.description}
     />
     <meta property="og:title" content={config.globalMeta.title} />
-    <meta
-      property="og:description"
-      content={config.globalMeta.description}
-    />
+    <meta property="og:description" content={config.globalMeta.description} />
     {config.globalMeta.keywords && (
       <meta name="keywords" content={config.globalMeta.keywords.join(", ")} />
     )}
@@ -43,12 +46,9 @@ const featuredArticles = (
       <meta property="og:image" content={config.globalMeta.cardImage} />
     )}
     <meta property="og:url" content={config.site.baseUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={config.globalMeta.title} />
-    <meta
-      name="twitter:description"
-      content={config.globalMeta.description}
-    />
+    <meta name="twitter:description" content={config.globalMeta.description} />
     {config.globalMeta.cardImage && (
       <meta name="twitter:image" content={config.globalMeta.cardImage} />
     )}
@@ -56,16 +56,119 @@ const featuredArticles = (
     <meta name="language" content="English" />
     <link rel="canonical" href={config.site.baseUrl} />
   </Fragment>
-  <Section class="my-16">
-    <Hero />
-  </Section>
-  <Section>
-    <Skills />
-  </Section>
-  <Section>
-    <FeaturedProjects featuredProjects={featuredProjects} />
-  </Section>
-  <Section>
-    <FeaturedArticles featuredArticles={featuredArticles} />
-  </Section>
+
+  <Hero showToggle={Boolean(personalSide)} />
+  <Ornament />
+
+  <!-- Professional -->
+  <div data-show="professional" class="flex flex-col">
+    <Section title="About" id="about">
+      <p class="font-display text-[28px] leading-[1.22] font-medium tracking-[-0.005em] text-(--ink) md:text-[32px]">
+        {about.lead}
+      </p>
+      {about.body.map((paragraph, index) => (
+        <p class:list={["text-base leading-[1.72] text-(--body) md:text-[17px]", index === 0 ? "mt-[22px]" : "mt-3.5"]}>
+          {paragraph}
+        </p>
+      ))}
+    </Section>
+
+    {hasWriting && (
+      <>
+        <Ornament />
+        <Section title={texts.articlesName} id="writing" list>
+          <ArticleList items={articles} />
+          <a class="lnk caps mt-[18px] inline-flex items-center gap-1.5 text-(--body)" href="/blog">
+            All writing
+          </a>
+        </Section>
+      </>
+    )}
+
+    <Ornament />
+    <Section title={texts.projectsName} id="projects" note="Pinned on GitHub,<br>refreshed daily." list>
+      <ProjectList items={projects} emptyText={texts.noProjects} />
+      {config.personal.githubProfile && (
+        <a
+          class="lnk caps mt-[18px] inline-flex items-center gap-1.5 text-(--body)"
+          href={`${config.personal.githubProfile}?tab=repositories`}
+        >
+          All repositories
+        </a>
+      )}
+    </Section>
+
+    {skills.length > 0 && (
+      <>
+        <Ornament />
+        <Section title="Stack" id="stack">
+          <Stack skills={skills} />
+        </Section>
+      </>
+    )}
+
+    <Ornament />
+    <Section title="Elsewhere" id="elsewhere" list>
+      <Elsewhere />
+    </Section>
+  </div>
+
+  <!-- Personal -->
+  {personalSide && (
+    <div data-show="personal" class="flex flex-col">
+      <Section title="About" id="personal-about">
+        <p class="font-display text-[28px] leading-[1.22] text-(--ink) italic md:text-[32px]">
+          {personalSide.lead}
+        </p>
+        {personalSide.body.map((paragraph) => (
+          <p class="mt-[22px] text-base leading-[1.8] text-(--body) md:text-[17px]">{paragraph}</p>
+        ))}
+      </Section>
+
+      {personalSide.lately.length > 0 && (
+        <>
+          <Ornament />
+          <Section title="Lately" id="lately" list>
+            <dl class="rule-list">
+              {personalSide.lately.map((entry) => (
+                <div class="rule-item grid gap-y-1 py-3.5 md:grid-cols-[120px_minmax(0,1fr)] md:items-baseline md:gap-x-6">
+                  <dt class="caps text-(--muted)">{entry.label}</dt>
+                  <dd class="font-display text-[22px] text-(--ink-2) italic">
+                    {entry.url ? (
+                      <a class="lnk hover:text-(--accent)" href={entry.url}>{entry.text}</a>
+                    ) : (
+                      entry.text
+                    )}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </Section>
+        </>
+      )}
+
+      {personalSide.sideProjects.length > 0 && (
+        <>
+          <Ornament />
+          <Section title="Made for fun" id="side-projects" list>
+            <ProjectList items={personalSide.sideProjects} />
+          </Section>
+        </>
+      )}
+
+      {hasWriting && (
+        <>
+          <Ornament />
+          <Section title={texts.articlesName} id="personal-writing" list>
+            <ArticleList items={articles} />
+          </Section>
+        </>
+      )}
+
+      <Ornament />
+      <Section title="Elsewhere" id="personal-elsewhere" list>
+        <Elsewhere include={["bluesky", "x", "email"]} emailLabel="Say hello" />
+      </Section>
+    </div>
+  )}
 </Layout>

@@ -1,0 +1,20 @@
+---
+type Props = { size?: number; hidden?: boolean; class?: string };
+
+const { size = 12, hidden = false, class: className } = Astro.props;
+---
+
+<svg
+  class:list={["arr", { "arr--hidden": hidden }, className]}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.8"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden="true"
+>
+  <path d="M7 17L17 7M8 7h9v9"></path>
+</svg>

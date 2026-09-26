@@ -1,0 +1,41 @@
+---
+import { processArticleDate } from "../lib/utils";
+
+export type ArticleItem = {
+  title: string;
+  url: string;
+  readTime?: number;
+  timestamp: Date;
+};
+
+type Props = { items: ArticleItem[]; emptyText?: string };
+
+const { items, emptyText } = Astro.props;
+---
+
+{
+  items.length === 0 ? (
+    <p class="meta">{emptyText}</p>
+  ) : (
+    <ul class="rule-list">
+      {items.map((item) => (
+        <li class="rule-item">
+          <a
+            class="lnk grid gap-y-1 py-4 md:grid-cols-[minmax(0,1fr)_auto] md:items-baseline md:gap-x-8"
+            href={item.url}
+          >
+            <span>
+              <span class="item-name">{item.title}</span>
+              {item.readTime && (
+                <span class="meta ml-3">{item.readTime} min read</span>
+              )}
+            </span>
+            <time class="meta tracking-[0.04em]" datetime={item.timestamp.toISOString()}>
+              {processArticleDate(item.timestamp)}
+            </time>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}

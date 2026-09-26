@@ -1,0 +1,15 @@
+---
+type Props = { title: string; eyebrow?: string };
+
+const { title, eyebrow } = Astro.props;
+---
+
+<div class="flex flex-col items-center pt-14 pb-12 text-center md:pt-20 md:pb-16">
+  {eyebrow && <p class="caps mb-4 text-(--muted)">{eyebrow}</p>}
+  <h1
+    class="font-display text-[44px] leading-[1.05] font-medium tracking-[-0.015em] text-(--ink) md:text-[56px]"
+  >
+    {title}
+  </h1>
+  <slot />
+</div>

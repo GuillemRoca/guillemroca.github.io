@@ -1,0 +1,28 @@
+---
+type Props = { class?: string };
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["flex justify-center py-12 md:py-16", className]}>
+  <svg width="148" height="12" viewBox="0 0 148 12" aria-hidden="true">
+    <line x1="0" y1="6" x2="58" y2="6" stroke="var(--line-2)" stroke-width="1"
+    ></line>
+    <circle cx="64" cy="6" r="1" fill="var(--dot)"></circle>
+    <circle
+      cx="74"
+      cy="6"
+      r="3.2"
+      fill="none"
+      stroke="var(--accent)"
+      stroke-width="1"></circle>
+    <circle cx="84" cy="6" r="1" fill="var(--dot)"></circle>
+    <line
+      x1="90"
+      y1="6"
+      x2="148"
+      y2="6"
+      stroke="var(--line-2)"
+      stroke-width="1"></line>
+  </svg>
+</div>

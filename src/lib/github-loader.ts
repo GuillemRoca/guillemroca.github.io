@@ -9,7 +9,8 @@ interface PinnedRepo {
     nodes: Array<{ topic: { name: string } }>;
   };
   pushedAt: string;
-  primaryLanguage: { name: string } | null;
+  stargazerCount: number;
+  primaryLanguage: { name: string; color: string | null } | null;
 }
 
 interface GraphQLResponse {
@@ -35,7 +36,8 @@ const QUERY = `{
             nodes { topic { name } }
           }
           pushedAt
-          primaryLanguage { name }
+          stargazerCount
+          primaryLanguage { name color }
         }
       }
     }
@@ -91,6 +93,9 @@ export function githubPinnedLoader(): Loader {
             description: repo.description ?? repo.name,
             githubUrl: repo.url,
             liveDemoUrl: repo.homepageUrl || undefined,
+            language: repo.primaryLanguage?.name,
+            languageColor: repo.primaryLanguage?.color ?? undefined,
+            stars: repo.stargazerCount,
             tags,
             timestamp: new Date(repo.pushedAt),
             featured: true,

@@ -1,5 +1,5 @@
 ---
-import Section from "../components/common/Section.astro";
+import PageHeading from "../components/PageHeading.astro";
 import Layout from "../layouts/Layout.astro";
 import { getConfigurationCollection } from "../lib/utils";
 
@@ -30,7 +30,7 @@ const { data: config } = await getConfigurationCollection();
       )
     }
     <meta property="og:url" content={config.site.baseUrl} />
-    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={config.notFoundMeta.title} />
     <meta
       name="twitter:description"
@@ -45,16 +45,10 @@ const { data: config } = await getConfigurationCollection();
     <meta name="language" content="English" />
     <link rel="canonical" href={config.site.baseUrl} />
   </Fragment>
-  <Section class="mt-16">
-    <h1 class="text-3xl sm:text-4xl font-display pb-8">
-      Well, this is awkward
-    </h1>
-    <h2 class="text-xl sm:text-2xl pb-8">404 - Page not found</h2>
-    <p>
-      It seems that this page does not exist. If you want to return to safety, <a
-        class="underline underline-offset-4 font-medium"
-        href="/">click here to go home</a
-      >.
+  <PageHeading title="Well, this is awkward" eyebrow="404 · Page not found">
+    <p class="mt-6 max-w-md text-[17px] leading-[1.72] text-(--body)">
+      This page doesn&#8217;t exist. If you want to return to safety,
+      <a class="lnk inline-link" href="/">head back home</a>.
     </p>
-  </Section>
+  </PageHeading>
 </Layout>

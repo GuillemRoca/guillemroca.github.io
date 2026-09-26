@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project Overview
-This is the personal website of Guillem Roca, hosted at [guillem.dev](https://guillem.dev). The project is a static site built with [Astro](https://astro.build) using the [Zaggonaut](https://github.com/RATIU5/zaggonaut) template and deployed to GitHub Pages.
+This is the personal website of Guillem Roca, hosted at [guillem.dev](https://guillem.dev). The project is a static site built with [Astro](https://astro.build) with a custom "Ivory Serif" design (originally scaffolded from the [Zaggonaut](https://github.com/RATIU5/zaggonaut) template) and deployed to GitHub Pages.
 
 ## Tech Stack
 - **Framework**: Astro 6
@@ -12,23 +12,23 @@ This is the personal website of Guillem Roca, hosted at [guillem.dev](https://gu
 - **Linting/Formatting**: Biome
 - **Package Manager**: pnpm
 - **Deployment**: GitHub Pages via GitHub Actions (daily scheduled rebuild at 6:00 UTC)
-- **Theme**: Dark/light mode follows device/browser preference automatically (no manual toggle)
+- **Theme**: Ivory Serif — Cormorant Garamond + Source Serif 4. The homepage Professional / Personal toggle drives the palette via `<html data-mode>`: Professional = night navy + gold (default), Personal = warm ivory + sage. The mode comes from `?mode=`, else the last choice in `localStorage`, set by an inline script in `Layout.astro` before paint.
 
 ## Key Files & Directories
 - `astro.config.mjs`: Main Astro configuration (includes Tailwind CSS plugin and `site` URL).
 - `src/content.config.ts`: Content collection schemas (configuration, blog, project).
 - `src/lib/github-loader.ts`: Custom Astro content loader that fetches pinned repos from GitHub GraphQL API.
-- `content/configuration.toml`: Site-wide configuration (metadata, hero, personal info, menu, skills).
-- `content/blogs/`: Markdown files for blog posts.
+- `content/configuration.toml`: Site-wide configuration (metadata, hero, about, personal side of the Professional/Personal toggle, links, menu, skills).
+- `content/blogs/`: Markdown files for blog posts. The Writing section and nav item appear automatically once at least one post exists.
 - `src/pages/`: Page routes (index, 404, blog/, projects/).
 - `src/layouts/`: Layout components (Layout, BlogLayout, ProjectLayout).
-- `src/components/`: Reusable UI components (Header, Footer, etc.).
-- `src/components/home/`: Homepage-specific components (Hero, Skills, FeaturedProjects, FeaturedArticles).
-- `src/components/common/`: Shared primitives (Anchor, Section).
+- `src/components/`: Reusable UI components (Header, Footer, ProjectList, ArticleList, Stack, Elsewhere, PageHeading, Prose).
+- `src/components/home/`: Homepage-specific components (Hero with the Professional/Personal toggle and the flipping photo/sketch portrait).
+- `src/components/common/`: Shared primitives (Section = label-left row, Ornament, Arrow).
 - `src/lib/`: Utility functions, types, and the GitHub loader.
-- `src/styles/global.css`: Tailwind imports, theme variables, and custom utility classes.
+- `src/styles/global.css`: Tailwind imports, Ivory light/dark CSS variables, and component classes.
 - `biome.json`: Biome linter/formatter configuration.
-- `public/`: Static assets (favicon.ico, CNAME, robots.txt).
+- `public/`: Static assets (favicon.ico, avatar-photo.webp / avatar-sketch.webp portraits, avatar.jpg social card, CNAME, robots.txt).
 - `.github/workflows/deploy.yml`: GitHub Actions workflow for automatic deployment (push + daily cron).
 
 ## Development Commands

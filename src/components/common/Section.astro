@@ -1,7 +1,29 @@
 ---
-const { class: className } = Astro.props;
+/**
+ * A homepage row: an italic serif label in the left margin and the
+ * content on the right. On phones the label sits above with a hairline.
+ */
+type Props = {
+  title: string;
+  id?: string;
+  note?: string;
+  /** Aligns the label with the first row of a hairline list. */
+  list?: boolean;
+  class?: string;
+};
+
+const { title, id, note, list = false, class: className } = Astro.props;
+const headingId = `${id ?? title.toLowerCase().replace(/\s+/g, "-")}-h`;
 ---
 
-<section class:list={["p-4 max-w-2xl mx-auto", className]}>
-  <slot />
+<section id={id} aria-labelledby={headingId} class:list={["row", className]}>
+  <div class:list={[list ? "row-label--list" : "row-label"]}>
+    <div class="row-label-head">
+      <h2 id={headingId} class="row-title">{title}</h2>
+    </div>
+    {note && <p class="row-note" set:html={note} />}
+  </div>
+  <div class="min-w-0">
+    <slot />
+  </div>
 </section>
